@@ -1,0 +1,61 @@
+{
+  "name": "@bib/sla",
+  "version": "0.1.0",
+  "description": "Business-hours SLA clocks with rule-based holiday calendars, pauses and warning thresholds.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "private": true,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./zone": {
+      "types": "./dist/zone.d.ts",
+      "default": "./dist/zone.js"
+    },
+    "./holidays": {
+      "types": "./dist/holidays.d.ts",
+      "default": "./dist/holidays.js"
+    },
+    "./calendars": {
+      "types": "./dist/calendars.d.ts",
+      "default": "./dist/calendars.js"
+    },
+    "./schedule": {
+      "types": "./dist/schedule.d.ts",
+      "default": "./dist/schedule.js"
+    },
+    "./clock": {
+      "types": "./dist/clock.d.ts",
+      "default": "./dist/clock.js"
+    },
+    "./timer": {
+      "types": "./dist/timer.d.ts",
+      "default": "./dist/timer.js"
+    },
+    "./status": {
+      "types": "./dist/status.d.ts",
+      "default": "./dist/status.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@bib/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "bib": {
+    "maturity": "experimental"
+  }
+}
