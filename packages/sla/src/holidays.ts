@@ -31,7 +31,7 @@
  * ```
  */
 
-import { daysInMonth, parseIsoDate } from "@bib/shared/dates"
+import { daysInMonth, formatIsoDateParts, parseIsoDate } from "@bib/shared/dates"
 import type { FieldIssue } from "@bib/shared/errors"
 import { shiftIsoDate, weekdayOf } from "./zone.ts"
 
@@ -104,10 +104,6 @@ export interface HolidayOccurrence {
   readonly observed: boolean
 }
 
-function iso(year: number, month: number, day: number): string {
-  return `${String(year).padStart(4, "0")}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`
-}
-
 /**
  * Western (Gregorian) Easter Sunday for `year`, as `YYYY-MM-DD`, using the
  * anonymous Gregorian algorithm (Meeus/Jones/Butcher).
@@ -130,7 +126,7 @@ export function easterSunday(year: number): string {
   const m = Math.floor((a + 11 * h + 22 * l) / 451)
   const month = Math.floor((h + l - 7 * m + 114) / 31)
   const day = ((h + l - 7 * m + 114) % 31) + 1
-  return iso(year, month, day)
+  return formatIsoDateParts(year, month, day)
 }
 
 /** The `nth` (1-5) occurrence of `weekday` in a month, or `undefined` if the month has no 5th. */
@@ -140,16 +136,16 @@ export function nthWeekdayOfMonth(
   weekday: number,
   nth: number,
 ): string | undefined {
-  const firstDow = weekdayOf(iso(year, month, 1))
+  const firstDow = weekdayOf(formatIsoDateParts(year, month, 1))
   const day = 1 + ((weekday - firstDow + 7) % 7) + (nth - 1) * 7
-  return day <= daysInMonth(year, month) ? iso(year, month, day) : undefined
+  return day <= daysInMonth(year, month) ? formatIsoDateParts(year, month, day) : undefined
 }
 
 /** The last occurrence of `weekday` in a month. */
 export function lastWeekdayOfMonth(year: number, month: number, weekday: number): string {
   const last = daysInMonth(year, month)
-  const lastDow = weekdayOf(iso(year, month, last))
-  return iso(year, month, last - ((lastDow - weekday + 7) % 7))
+  const lastDow = weekdayOf(formatIsoDateParts(year, month, last))
+  return formatIsoDateParts(year, month, last - ((lastDow - weekday + 7) % 7))
 }
 
 function appliesIn(rule: HolidayRule, year: number): boolean {
@@ -167,7 +163,9 @@ export function nominalDate(rule: HolidayRule, year: number): string | undefined
   if (!appliesIn(rule, year)) return undefined
   switch (rule.kind) {
     case "fixed":
-      return rule.day <= daysInMonth(year, rule.month) ? iso(year, rule.month, rule.day) : undefined
+      return rule.day <= daysInMonth(year, rule.month)
+        ? formatIsoDateParts(year, rule.month, rule.day)
+        : undefined
     case "nth-weekday":
       return nthWeekdayOfMonth(year, rule.month, rule.weekday, rule.nth)
     case "last-weekday":

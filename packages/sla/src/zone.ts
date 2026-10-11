@@ -19,7 +19,14 @@
  * ```
  */
 
-import { addDays, formatIsoDate, MS_PER_MINUTE, parseIsoDate, zonedParts } from "@bib/shared/dates"
+import {
+  addDays,
+  formatIsoDate,
+  formatIsoDateParts,
+  MS_PER_MINUTE,
+  parseIsoDate,
+  zonedParts,
+} from "@bib/shared/dates"
 
 /** Minutes in a day; also the only legal `HH:MM` value above 23:59 (`"24:00"`). */
 export const MINUTES_PER_DAY = 1440
@@ -70,7 +77,7 @@ export function offsetAt(ms: number, timeZone: string): number {
 export function localDateOf(date: Date, timeZone: string): string {
   assertInstant(date, "localDateOf")
   const p = zonedParts(date, timeZone)
-  return `${String(p.year).padStart(4, "0")}-${String(p.month).padStart(2, "0")}-${String(p.day).padStart(2, "0")}`
+  return formatIsoDateParts(p.year, p.month, p.day)
 }
 
 /** Minutes after local midnight of `date` in `timeZone` (seconds dropped). */
