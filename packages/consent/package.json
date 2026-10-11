@@ -1,0 +1,66 @@
+{
+  "name": "@bib/consent",
+  "version": "0.1.0",
+  "description": "Privacy-region detection, Google Consent Mode v2 state, and first-party attribution capture (UTMs and click IDs).",
+  "type": "module",
+  "license": "UNLICENSED",
+  "private": true,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./region": {
+      "types": "./dist/region.d.ts",
+      "default": "./dist/region.js"
+    },
+    "./state": {
+      "types": "./dist/state.d.ts",
+      "default": "./dist/state.js"
+    },
+    "./consent-mode": {
+      "types": "./dist/consent-mode.d.ts",
+      "default": "./dist/consent-mode.js"
+    },
+    "./utm": {
+      "types": "./dist/utm.d.ts",
+      "default": "./dist/utm.js"
+    },
+    "./click-ids": {
+      "types": "./dist/click-ids.d.ts",
+      "default": "./dist/click-ids.js"
+    },
+    "./referrer": {
+      "types": "./dist/referrer.d.ts",
+      "default": "./dist/referrer.js"
+    },
+    "./touch": {
+      "types": "./dist/touch.d.ts",
+      "default": "./dist/touch.js"
+    },
+    "./strip": {
+      "types": "./dist/strip.d.ts",
+      "default": "./dist/strip.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@bib/shared": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "bib": {
+    "maturity": "experimental"
+  }
+}
