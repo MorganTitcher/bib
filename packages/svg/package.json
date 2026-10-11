@@ -1,0 +1,74 @@
+{
+  "name": "@bib/svg",
+  "version": "0.1.0",
+  "description": "Pure-TypeScript SVG tooling: escaping, an element builder, a validated SVG DSL, a conservative sanitizer, color/contrast, badges, Open Graph cards and BIMI checks.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "private": true,
+  "bib": {
+    "maturity": "experimental"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./escape": {
+      "types": "./dist/escape.d.ts",
+      "default": "./dist/escape.js"
+    },
+    "./element": {
+      "types": "./dist/element.d.ts",
+      "default": "./dist/element.js"
+    },
+    "./xml": {
+      "types": "./dist/xml.d.ts",
+      "default": "./dist/xml.js"
+    },
+    "./sanitize": {
+      "types": "./dist/sanitize.d.ts",
+      "default": "./dist/sanitize.js"
+    },
+    "./color": {
+      "types": "./dist/color.d.ts",
+      "default": "./dist/color.js"
+    },
+    "./text-metrics": {
+      "types": "./dist/text-metrics.d.ts",
+      "default": "./dist/text-metrics.js"
+    },
+    "./badge": {
+      "types": "./dist/badge.d.ts",
+      "default": "./dist/badge.js"
+    },
+    "./og-card": {
+      "types": "./dist/og-card.d.ts",
+      "default": "./dist/og-card.js"
+    },
+    "./bimi": {
+      "types": "./dist/bimi.d.ts",
+      "default": "./dist/bimi.js"
+    },
+    "./dsl": {
+      "types": "./dist/dsl.d.ts",
+      "default": "./dist/dsl.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@bib/shared": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
