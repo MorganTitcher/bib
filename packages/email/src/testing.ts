@@ -37,6 +37,7 @@
  * ```
  */
 
+import { bytesToBase64 } from "@bib/shared/encoding"
 import type { EmailError } from "./errors.ts"
 import type { EmailMessage } from "./message.ts"
 import type { EmailProvider, FetchLike, SendOutcome } from "./provider.ts"
@@ -267,7 +268,7 @@ export function runProviderContract(runner: ContractRunner, harness: ContractHar
 
     it("sends attachment content", async () => {
       const { mock, provider } = setup()
-      const content = Buffer.from("contract attachment").toString("base64")
+      const content = bytesToBase64(new TextEncoder().encode("contract attachment"))
       const outcome = await provider.send(
         contractMessage({
           attachments: [

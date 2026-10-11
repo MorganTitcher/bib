@@ -32,6 +32,7 @@
  * ```
  */
 
+import { bytesToBase64 } from "@bib/shared/encoding"
 import { type FieldIssue, ValidationError } from "@bib/shared/errors"
 import { err, ok, type Result } from "@bib/shared/result"
 import { z } from "zod"
@@ -178,11 +179,6 @@ export function base64DecodedLength(b64: string): number {
   if (b64.length === 0) return 0
   const padding = b64.endsWith("==") ? 2 : b64.endsWith("=") ? 1 : 0
   return (b64.length / 4) * 3 - padding
-}
-
-/** Standard padded base64 of raw bytes. */
-export function bytesToBase64(bytes: Uint8Array): string {
-  return Buffer.from(bytes.buffer, bytes.byteOffset, bytes.byteLength).toString("base64")
 }
 
 const addressInput = z.union([

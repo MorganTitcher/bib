@@ -75,7 +75,6 @@ export {
   allRecipients,
   attachmentBytes,
   base64DecodedLength,
-  bytesToBase64,
   type EmailMessage,
   type EmailMessageInput,
   EmailMessageInputSchema,

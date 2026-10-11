@@ -20,6 +20,7 @@
  * ```
  */
 
+import { bytesToBase64 } from "@bib/shared/encoding"
 import { err, ok, type Result } from "@bib/shared/result"
 
 /** A mailbox: an address with an optional display name. */
@@ -200,7 +201,7 @@ export function encodeHeaderWord(value: string): string {
   let chunk: number[] = []
   const flush = (): void => {
     if (chunk.length > 0) {
-      words.push(`=?UTF-8?B?${Buffer.from(chunk).toString("base64")}?=`)
+      words.push(`=?UTF-8?B?${bytesToBase64(Uint8Array.from(chunk))}?=`)
       chunk = []
     }
   }

@@ -3,7 +3,6 @@ import {
   allRecipients,
   attachmentBytes,
   base64DecodedLength,
-  bytesToBase64,
   guessContentType,
   parseMessage,
 } from "../src/message.ts"
@@ -164,11 +163,6 @@ describe("helpers", () => {
     expect(base64DecodedLength("QQ==")).toBe(1)
     expect(base64DecodedLength("QUI=")).toBe(2)
     expect(base64DecodedLength("QUJD")).toBe(3)
-  })
-
-  it("encodes a subarray view of bytes", () => {
-    const bytes = new Uint8Array([0, 65, 66, 0]).subarray(1, 3)
-    expect(bytesToBase64(bytes)).toBe("QUI=")
   })
 
   it("collects recipients and attachment bytes", () => {
