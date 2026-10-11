@@ -2,9 +2,9 @@
   "name": "bib",
   "private": true,
   "description": "Business in a box: plug-and-play tooling for brand, marketing, and finance.",
-  "packageManager": "pnpm@10.28.0",
+  "packageManager": "pnpm@12.11.2",
   "engines": {
-    "node": ">=22"
+    "node": ">=24.11"
   },
   "scripts": {
     "build": "turbo run build",
