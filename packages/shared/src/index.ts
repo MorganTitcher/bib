@@ -38,6 +38,7 @@ export {
   daysBetween,
   daysInMonth,
   formatIsoDate,
+  formatIsoDateParts,
   isLeapYear,
   isoMonthKey,
   MS_PER_DAY,
@@ -50,6 +51,13 @@ export {
   type ZonedParts,
   zonedParts,
 } from "./dates.ts"
+export {
+  base64ToBytes,
+  base64UrlToBytes,
+  bytesToBase64,
+  bytesToBase64Url,
+  bytesToHex,
+} from "./encoding.ts"
 export {
   EnvError,
   type EnvReadOptions,
@@ -104,6 +112,7 @@ export {
 } from "./guards.ts"
 export {
   contentHash,
+  fnv1a32,
   isSha256Hex,
   type StableValue,
   sha256,
@@ -238,3 +247,4 @@ export {
   truncateAtWord,
   upperFirst,
 } from "./strings.ts"
+export { cdata, escapeXml, escapeXmlAttr, isXmlChar, stripInvalidXmlChars } from "./xml.ts"

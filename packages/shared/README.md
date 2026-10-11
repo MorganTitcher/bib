@@ -2,8 +2,8 @@
 
 The building blocks every other bib package uses: typed `Result` error handling,
 runtime guards, a structured error hierarchy, async control flow, retry with
-backoff, exact integer money, display formatting, string and CSV utilities, ids,
-content hashing, cursor pagination, seeded randomness, statistics, UTC calendar
+backoff, exact integer money, display formatting, string, CSV and XML utilities, byte
+encodings, ids, content hashing, cursor pagination, seeded randomness, statistics, UTC calendar
 arithmetic, typed environment access, and a typed event emitter. Each module is
 small, documented in place with examples, and covered by its own test file.
 
@@ -46,13 +46,15 @@ same change.
 | `strings` | experimental | Inkwell shared | Slugs, grapheme-aware truncation, case conversion, HTML escaping. `splitWords` returns lowercase words |
 | `csv` | experimental | Inkwell shared (+ parser) | RFC 4180 writer with formula-injection guard, plus a parser |
 | `ids` | experimental | new | UUIDv7, secure tokens, prefixed sortable ids. `prefixedId` uses a ULID-like body |
-| `hashing` | experimental | Inkwell shared | `stableStringify`, SHA-256 via Web Crypto, constant-time compare |
+| `hashing` | experimental | Inkwell shared | `stableStringify`, SHA-256 via Web Crypto, constant-time compare, non-cryptographic `fnv1a32` |
 | `pagination` | experimental | Inkwell shared | Opaque base64url cursors, limit clamping, array pagination |
 | `random` | experimental | new | Seeded mulberry32 RNG with distributions, for reproducible simulation |
 | `stats` | experimental | new | Descriptive stats, distribution functions, z-test and Welch t-test. Throws on empty input. `percentile` takes p from 0 to 100 |
-| `dates` | experimental | Inkwell + Haven shared | UTC calendar arithmetic with billing-style month clamping; timezone wall-clock |
+| `dates` | experimental | Inkwell + Haven shared | UTC calendar arithmetic with billing-style month clamping; timezone wall-clock; `formatIsoDateParts` |
 | `env` | experimental | Inkwell shared | Fail-fast typed env readers. Errors never echo the value |
 | `events` | experimental | Inkwell shared | Synchronous typed pub/sub that isolates listener errors |
+| `encoding` | experimental | consolidated from bib packages | Hex, padded base64 and unpadded base64url without `Buffer`. Decoders return `undefined` on malformed input |
+| `xml` | experimental | consolidated from bib packages | XML 1.0 character validity, text and attribute escaping, CDATA. Writes `'` as `&#39;` |
 
 ## Usage
 
@@ -196,12 +198,13 @@ generateToken(32)                // 64 hex chars from crypto.getRandomValues
 ### hashing
 
 ```ts
-import { sha256, contentHash, stableStringify, timingSafeEqual } from "@bib/shared/hashing"
+import { contentHash, fnv1a32, sha256, stableStringify, timingSafeEqual } from "@bib/shared/hashing"
 
 await sha256("abc") // "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
 stableStringify({ b: 1, a: 2 })                                       // '{"a":2,"b":1}'
 (await contentHash({ a: 1, b: 2 })) === (await contentHash({ b: 2, a: 1 })) // true
 timingSafeEqual("sig-a", "sig-a")                                     // true
+fnv1a32("foobar")                                                     // 0xbf9cf968 (fast, not secure)
 ```
 
 ### pagination
@@ -244,7 +247,13 @@ welchTTest([5.1, 4.9, 5.3, 5.0], [5.6, 5.8, 5.5, 5.9]).pValue // ≈ 0.0025
 ### dates
 
 ```ts
-import { parseIsoDate, addMonthsClamped, monthsBetween, formatIsoDate, zonedParts } from "@bib/shared/dates"
+import {
+  addMonthsClamped,
+  formatIsoDate,
+  formatIsoDateParts,
+  parseIsoDate,
+  zonedParts,
+} from "@bib/shared/dates"
 
 const jan31 = parseIsoDate("2024-01-31")
 if (jan31) {
@@ -252,6 +261,7 @@ if (jan31) {
 }
 parseIsoDate("2026-02-30") // undefined (impossible date, no rollover)
 zonedParts(new Date("2026-03-01T03:30:00Z"), "America/New_York").day // 28
+formatIsoDateParts(2026, 7, 4) // "2026-07-04" (throws RangeError for an impossible date)
 ```
 
 ### env
@@ -281,6 +291,30 @@ const bus = new TypedEventEmitter<InvoiceEvents>()
 const off = bus.on("paid", ({ invoiceId }) => console.log("paid", invoiceId))
 bus.emit("paid", { invoiceId: "inv_1", amountMinor: 1999n }) // logs "paid inv_1"
 off()
+```
+
+### encoding
+
+```ts
+import { base64UrlToBytes, bytesToBase64, bytesToBase64Url, bytesToHex } from "@bib/shared/encoding"
+
+const bytes = new TextEncoder().encode("hi?")
+bytesToHex(bytes)        // "68693f"
+bytesToBase64(bytes)     // "aGk/"
+bytesToBase64Url(bytes)  // "aGk_"
+base64UrlToBytes("aGk_") // Uint8Array [104, 105, 63]
+base64UrlToBytes("a")    // undefined (impossible length)
+```
+
+### xml
+
+```ts
+import { cdata, escapeXml, escapeXmlAttr, isXmlChar } from "@bib/shared/xml"
+
+escapeXml("Q&A <b> \u0007") // "Q&amp;A &lt;b&gt; " (control character dropped)
+escapeXmlAttr("a\nb")       // "a&#10;b" (survives attribute normalization)
+cdata("a ]]> b")            // "<![CDATA[a ]]]]><![CDATA[> b]]>"
+isXmlChar(0x1)              // false
 ```
 
 ## Development

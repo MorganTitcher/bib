@@ -19,6 +19,7 @@
  * rng.shuffle([1, 2, 3, 4])  // new array, Fisher–Yates
  * ```
  */
+import { fnv1a32 } from "./hashing.ts"
 
 /** A seeded random source. All methods advance the shared state. */
 export interface Rng {
@@ -48,12 +49,7 @@ export interface Rng {
 
 /** Derive a 32-bit seed from a string (FNV-1a), so seeds can be readable names. */
 export function seedFromString(text: string): number {
-  let hash = 0x811c9dc5
-  for (let i = 0; i < text.length; i++) {
-    hash ^= text.charCodeAt(i)
-    hash = Math.imul(hash, 0x01000193)
-  }
-  return hash >>> 0
+  return fnv1a32(text)
 }
 
 /** The raw mulberry32 step function for callers who only need `() => number`. */

@@ -16,6 +16,7 @@
  * (await contentHash({ a: 1, b: 2 })) === (await contentHash({ b: 2, a: 1 })) // true
  * ```
  */
+import { bytesToHex } from "./encoding.ts"
 
 /** Values {@link stableStringify} accepts. */
 export type StableValue =
@@ -68,14 +69,25 @@ export function stableStringify(value: StableValue): string {
   return walk(value) ?? "null"
 }
 
-function hex(buffer: ArrayBuffer): string {
-  return Array.from(new Uint8Array(buffer), (b) => b.toString(16).padStart(2, "0")).join("")
+/**
+ * 32-bit FNV-1a over UTF-16 code units, as an unsigned integer. Fast and
+ * deterministic, for seeds, bucketing and short stable ids — not for security
+ * or content addressing (use {@link sha256}).
+ */
+export function fnv1a32(text: string): number {
+  let hash = 0x811c9dc5
+  for (let i = 0; i < text.length; i++) {
+    hash ^= text.charCodeAt(i)
+    hash = Math.imul(hash, 0x01000193)
+  }
+  return hash >>> 0
 }
 
 /** SHA-256 of raw bytes, as lowercase hex. */
 export async function sha256Bytes(data: Uint8Array): Promise<string> {
   // Copy into a fresh ArrayBuffer-backed view so SharedArrayBuffer inputs are accepted.
-  return hex(await crypto.subtle.digest("SHA-256", new Uint8Array(data)))
+  const digest = await crypto.subtle.digest("SHA-256", new Uint8Array(data))
+  return bytesToHex(new Uint8Array(digest))
 }
 
 /** SHA-256 of a string's UTF-8 encoding, as lowercase hex. */

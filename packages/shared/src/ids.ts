@@ -20,24 +20,12 @@
  * ```
  */
 
-const HEX = Array.from({ length: 256 }, (_, i) => i.toString(16).padStart(2, "0"))
+import { bytesToBase64Url, bytesToHex } from "./encoding.ts"
 
 function randomBytes(length: number): Uint8Array {
   const bytes = new Uint8Array(length)
   crypto.getRandomValues(bytes)
   return bytes
-}
-
-function toHex(bytes: Uint8Array): string {
-  let out = ""
-  for (const b of bytes) out += HEX[b] ?? "00"
-  return out
-}
-
-function toBase64Url(bytes: Uint8Array): string {
-  let binary = ""
-  for (const b of bytes) binary += String.fromCharCode(b)
-  return btoa(binary).replaceAll("+", "-").replaceAll("/", "_").replace(/=+$/, "")
 }
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
@@ -66,7 +54,7 @@ export function uuidv7(now: number = Date.now()): string {
   }
   bytes[6] = ((bytes[6] ?? 0) & 0x0f) | 0x70
   bytes[8] = ((bytes[8] ?? 0) & 0x3f) | 0x80
-  const h = toHex(bytes)
+  const h = bytesToHex(bytes)
   return `${h.slice(0, 8)}-${h.slice(8, 12)}-${h.slice(12, 16)}-${h.slice(16, 20)}-${h.slice(20)}`
 }
 
@@ -85,7 +73,7 @@ export function generateToken(byteLength = 32, encoding: "hex" | "base64url" = "
     throw new RangeError(`byteLength must be an integer in 1..65536, got ${byteLength}`)
   }
   const bytes = randomBytes(byteLength)
-  return encoding === "hex" ? toHex(bytes) : toBase64Url(bytes)
+  return encoding === "hex" ? bytesToHex(bytes) : bytesToBase64Url(bytes)
 }
 
 /** Crockford base32: no I, L, O, U — unambiguous when read aloud or typed. */

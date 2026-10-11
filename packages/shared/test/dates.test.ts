@@ -5,6 +5,7 @@ import {
   daysBetween,
   daysInMonth,
   formatIsoDate,
+  formatIsoDateParts,
   isLeapYear,
   isoMonthKey,
   MS_PER_DAY,
@@ -101,5 +102,25 @@ describe("zonedParts", () => {
   it("throws for unknown timezones and invalid dates", () => {
     expect(() => zonedParts(new Date(), "Mars/Base")).toThrow(RangeError)
     expect(() => zonedParts(new Date(Number.NaN), "UTC")).toThrow(RangeError)
+  })
+})
+
+describe("formatIsoDateParts", () => {
+  it("zero-pads every field", () => {
+    expect(formatIsoDateParts(2026, 3, 7)).toBe("2026-03-07")
+    expect(formatIsoDateParts(5, 1, 1)).toBe("0005-01-01")
+  })
+  it("accepts leap days only in leap years", () => {
+    expect(formatIsoDateParts(2024, 2, 29)).toBe("2024-02-29")
+    expect(() => formatIsoDateParts(2026, 2, 29)).toThrow(RangeError)
+  })
+  it.each([
+    [2026, 0, 1],
+    [2026, 13, 1],
+    [2026, 1, 0],
+    [2026.5, 1, 1],
+    [10_000, 1, 1],
+  ])("rejects %i-%i-%i", (y, m, d) => {
+    expect(() => formatIsoDateParts(y, m, d)).toThrow(RangeError)
   })
 })

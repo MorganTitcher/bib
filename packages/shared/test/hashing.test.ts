@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest"
 import {
   contentHash,
+  fnv1a32,
   isSha256Hex,
   type StableValue,
   sha256,
@@ -67,5 +68,19 @@ describe("isSha256Hex and timingSafeEqual", () => {
     expect(timingSafeEqual("abc", "abd")).toBe(false)
     expect(timingSafeEqual("abc", "ab")).toBe(false)
     expect(timingSafeEqual("", "")).toBe(true)
+  })
+})
+
+describe("fnv1a32", () => {
+  it("matches the published FNV-1a 32-bit vectors", () => {
+    expect(fnv1a32("")).toBe(0x811c9dc5)
+    expect(fnv1a32("a")).toBe(0xe40c292c)
+    expect(fnv1a32("foobar")).toBe(0xbf9cf968)
+  })
+  it("is an unsigned 32-bit integer", () => {
+    for (const text of ["x", "badge|label|msg", "😀"]) {
+      const h = fnv1a32(text)
+      expect(Number.isInteger(h) && h >= 0 && h < 2 ** 32).toBe(true)
+    }
   })
 })

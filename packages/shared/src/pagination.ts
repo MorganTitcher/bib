@@ -20,22 +20,7 @@
  * ```
  */
 
-function bytesToBase64Url(bytes: Uint8Array): string {
-  let binary = ""
-  for (const b of bytes) binary += String.fromCharCode(b)
-  return btoa(binary).replaceAll("+", "-").replaceAll("/", "_").replace(/=+$/, "")
-}
-
-function base64UrlToBytes(text: string): Uint8Array | undefined {
-  if (!/^[A-Za-z0-9_-]*$/.test(text) || text.length % 4 === 1) return undefined
-  const b64 = text.replaceAll("-", "+").replaceAll("_", "/")
-  try {
-    const binary = atob(b64 + "=".repeat((4 - (b64.length % 4)) % 4))
-    return Uint8Array.from(binary, (c) => c.charCodeAt(0))
-  } catch {
-    return undefined
-  }
-}
+import { base64UrlToBytes, bytesToBase64Url } from "./encoding.ts"
 
 /** Encode any JSON-serializable value as an opaque URL-safe cursor. */
 export function encodeCursor(value: unknown): string {

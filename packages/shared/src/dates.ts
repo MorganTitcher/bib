@@ -77,6 +77,26 @@ export function formatIsoDate(date: Date): string {
   return date.toISOString().slice(0, 10)
 }
 
+/**
+ * Format calendar fields (`month` 1-based) as zero-padded `YYYY-MM-DD` without
+ * building a Date, so years 0–99 are not remapped to 1900–1999. Pairs with
+ * {@link zonedParts} to name a day in a timezone.
+ *
+ * @throws RangeError when a field is not an integer in range.
+ */
+export function formatIsoDateParts(year: number, month: number, day: number): string {
+  if (!Number.isInteger(year) || year < 0 || year > 9999) {
+    throw new RangeError(`formatIsoDateParts: year must be an integer in 0..9999, got ${year}`)
+  }
+  if (!Number.isInteger(month) || month < 1 || month > 12) {
+    throw new RangeError(`formatIsoDateParts: month must be an integer in 1..12, got ${month}`)
+  }
+  if (!Number.isInteger(day) || day < 1 || day > daysInMonth(year, month)) {
+    throw new RangeError(`formatIsoDateParts: invalid day ${day} for ${year}-${month}`)
+  }
+  return `${String(year).padStart(4, "0")}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`
+}
+
 /** Add whole days (negative to subtract). Exactly `n × 24h` — no DST effects in UTC. */
 export function addDays(date: Date, days: number): Date {
   assertValid(date, "addDays")
