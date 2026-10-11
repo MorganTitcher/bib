@@ -9,7 +9,8 @@
  * event-handler attributes, but it does not sanitize untrusted documents; use
  * `sanitizeSvg` from `@bib/svg/sanitize` for that.
  */
-import { escapeXmlAttr, escapeXmlText, isXmlName } from "./escape.ts"
+import { escapeXml, escapeXmlAttr } from "@bib/shared/xml"
+import { isXmlName } from "./escape.ts"
 
 /** Markup that is already serialized and safe to insert verbatim. */
 export class Markup {
@@ -64,8 +65,8 @@ function serializeChildren(children: readonly Child[]): string {
   for (const child of children) {
     if (child === null || child === undefined || child === false) continue
     if (child instanceof Markup) out += child.value
-    else if (typeof child === "string") out += escapeXmlText(child)
-    else if (typeof child === "number") out += escapeXmlText(String(child))
+    else if (typeof child === "string") out += escapeXml(child)
+    else if (typeof child === "number") out += escapeXml(String(child))
     else out += serializeChildren(child)
   }
   return out

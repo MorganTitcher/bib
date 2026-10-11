@@ -25,7 +25,7 @@ The whole package is `experimental` (`"bib": { "maturity": "experimental" }`).
 
 | Module | Status | Ported from | Notes |
 |---|---|---|---|
-| `escape` | experimental | Inkwell shared | Text/attribute escaping, strips XML-illegal control characters, `formatNumber` for compact coordinates |
+| `escape` | experimental | Inkwell shared | `isXmlName` and `formatNumber` for compact coordinates. Text/attribute escaping is `@bib/shared/xml` |
 | `element` | experimental | new | `h()` builds escaped strings. `Markup` marks trusted output; `raw()` is the only escape hatch |
 | `xml` | experimental | new | Small strict XML parser that never throws. Rejects DOCTYPE/ENTITY. Supports depth and node limits. Not a general XML parser |
 | `sanitize` | experimental | adsights (rewritten) | Parse-and-reserialize with a default-deny allowlist. Fails closed when input is malformed or over budget |
@@ -43,11 +43,13 @@ Every output shown below was produced by the built package.
 ### escape
 
 ```ts
-import { escapeXmlText, escapeXmlAttr, formatNumber } from "@bib/svg/escape"
+import { formatNumber, isXmlName } from "@bib/svg/escape"
+import { escapeXml, escapeXmlAttr } from "@bib/shared/xml"
 
-escapeXmlText('a < b & "c"') // 'a &lt; b &amp; &quot;c&quot;'
-escapeXmlAttr('x"y<') //        'x&quot;y&lt;'
-formatNumber(1 / 3) //          "0.333"
+escapeXml('a < b & "c"') //  'a &lt; b &amp; &quot;c&quot;'
+escapeXmlAttr('x"y<') //     'x&quot;y&lt;'
+formatNumber(1 / 3) //       "0.333"
+isXmlName("stroke-width") // true
 ```
 
 ### element

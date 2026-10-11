@@ -19,7 +19,7 @@
  * processing instruction, malformed XML, excessive size or nesting, `<use>`
  * reference cycles, or runaway `<use>` expansion are rejected outright.
  */
-import { escapeXmlAttr, escapeXmlText } from "./escape.ts"
+import { escapeXml, escapeXmlAttr } from "@bib/shared/xml"
 import { parseXml, type XmlElement, type XmlNode } from "./xml.ts"
 
 const SVG_NS = "http://www.w3.org/2000/svg"
@@ -645,7 +645,7 @@ function serialize(node: SNode, isRoot: boolean): string {
   for (const [name, value] of node.attrs) attrs += ` ${name}="${escapeXmlAttr(value)}"`
   let inner = ""
   for (const child of node.children) {
-    inner += typeof child === "string" ? escapeXmlText(child) : serialize(child, false)
+    inner += typeof child === "string" ? escapeXml(child) : serialize(child, false)
   }
   return inner === "" ? `<${node.name}${attrs}/>` : `<${node.name}${attrs}>${inner}</${node.name}>`
 }

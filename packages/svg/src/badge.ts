@@ -8,6 +8,7 @@
  * and newer color syntaxes. Text color is chosen for contrast against each
  * segment rather than fixed to white.
  */
+import { fnv1a32 } from "@bib/shared/hashing"
 import { normalizeWhitespace, truncate } from "@bib/shared/strings"
 import { contrastRatio, parseColor, pickReadableText, toHex } from "./color.ts"
 import { h, svg } from "./element.ts"
@@ -69,16 +70,6 @@ export function badgeSegmentWidth(text: string): number {
   return Math.round(estimateTextWidth(text, { fontSize: BADGE_FONT_SIZE }) + BADGE_PADDING * 2)
 }
 
-/** 32-bit FNV-1a, used only to derive collision-resistant element ids. */
-function fnv1a(text: string): string {
-  let hash = 0x811c9dc5
-  for (let i = 0; i < text.length; i += 1) {
-    hash ^= text.charCodeAt(i)
-    hash = Math.imul(hash, 0x01000193)
-  }
-  return (hash >>> 0).toString(36)
-}
-
 /**
  * Render a badge.
  *
@@ -101,7 +92,9 @@ export function renderBadge(options: BadgeOptions): string {
   const messageWidth = badgeSegmentWidth(message)
   const width = labelWidth + messageWidth
   const radius = options.style === "flat-square" ? 0 : 3
-  const clipId = `badge-${fnv1a(`${label}|${message}|${color}|${labelColor}|${radius}`)}`
+  // 32-bit FNV-1a of the inputs: a stable, collision-resistant element id.
+  const idHash = fnv1a32(`${label}|${message}|${color}|${labelColor}|${radius}`)
+  const clipId = `badge-${idHash.toString(36)}`
   const textY = 14
 
   return svg(

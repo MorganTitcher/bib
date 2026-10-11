@@ -9,6 +9,7 @@
  * resources and never expands entities beyond the five predefined ones and
  * numeric character references.
  */
+import { isXmlChar } from "@bib/shared/xml"
 
 /** An attribute in source order, with its value entity-decoded and normalized. */
 export interface XmlAttr {
@@ -87,17 +88,6 @@ const PREDEFINED: Readonly<Record<string, string>> = {
   apos: "'",
 }
 
-function isAllowedCodePoint(cp: number): boolean {
-  return (
-    cp === 0x9 ||
-    cp === 0xa ||
-    cp === 0xd ||
-    (cp >= 0x20 && cp <= 0xd7ff) ||
-    (cp >= 0xe000 && cp <= 0xfffd) ||
-    (cp >= 0x10000 && cp <= 0x10ffff)
-  )
-}
-
 function decodeReferences(raw: string, offset: number): string {
   if (!raw.includes("&")) return raw
   return raw.replace(/&([^;&\s]*);?/g, (match, body: string, index: number) => {
@@ -110,7 +100,7 @@ function decodeReferences(raw: string, offset: number): string {
     if (/^#x[0-9A-Fa-f]{1,6}$/.test(body)) cp = Number.parseInt(body.slice(2), 16)
     else if (/^#[0-9]{1,7}$/.test(body)) cp = Number.parseInt(body.slice(1), 10)
     else throw new ParseFailure("malformed", `unknown entity &${body};`, offset + index)
-    if (!isAllowedCodePoint(cp)) {
+    if (!isXmlChar(cp)) {
       throw new ParseFailure("malformed", `illegal character reference &${body};`, offset + index)
     }
     return String.fromCodePoint(cp)

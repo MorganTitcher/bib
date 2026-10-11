@@ -81,13 +81,7 @@ export {
   SVG_NS,
   svg,
 } from "./element.ts"
-export {
-  escapeXmlAttr,
-  escapeXmlText,
-  formatNumber,
-  isXmlName,
-  stripIllegalXmlChars,
-} from "./escape.ts"
+export { formatNumber, isXmlName } from "./escape.ts"
 export {
   normalizeCardText,
   OG_DARK_THEME,
