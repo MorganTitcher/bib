@@ -7,8 +7,8 @@
  * (`Sun, 11 Oct 2026 00:00:00 GMT`); Atom dates use RFC 3339.
  */
 
+import { cdata, escapeXml } from "@bib/shared/xml"
 import { type DateInput, isAbsoluteHttpUrl, toInstant } from "./internal.ts"
-import { cdata, escapeXml } from "./xml.ts"
 
 export interface FeedItem {
   readonly title: string

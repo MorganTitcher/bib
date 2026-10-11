@@ -52,10 +52,6 @@
     "./impact": {
       "types": "./dist/impact.d.ts",
       "default": "./dist/impact.js"
-    },
-    "./xml": {
-      "types": "./dist/xml.d.ts",
-      "default": "./dist/xml.js"
     }
   },
   "files": [

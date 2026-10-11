@@ -44,7 +44,7 @@ APIs may change.
 |---|---|---|---|
 | `jsonld` | experimental | Inkwell + Haven marketing JSON-LD | Organization, WebSite, WebPage, Article/BlogPosting, Product/Offer, SoftwareApplication, FAQPage, BreadcrumbList, HowTo, Event, LocalBusiness; `@graph`; escapes `< > & U+2028 U+2029` |
 | `metadata` | experimental | new (patterns from Inkwell + AdSights web) | Title template, length checks, canonical, OG, Twitter, hreflang validation, robots directives. Returns warnings, never throws on soft problems |
-| `sitemap` | experimental | new + AdSights web freshness model | XML escaping, invalid-char stripping, 50k-URL chunking with index, image + hreflang extensions, hash-based `lastmod` carry-forward |
+| `sitemap` | experimental | new + AdSights web freshness model | XML escaping and invalid-char stripping via `@bib/shared/xml`, 50k-URL chunking with index, image + hreflang extensions, hash-based `lastmod` carry-forward |
 | `robots` | experimental | Inkwell AI-crawler constants + AdSights web robots | AI-crawler registry re-verified and cited on 2026-10-11; `allow-all` / `block-training` / `block-all` policies; RFC 9309 path validation |
 | `llms-txt` | experimental | new (format from llmstxt.org) | Markdown escaping of link text, URL paren/space encoding, `## Optional` section |
 | `feeds` | experimental | Inkwell blog/changelog RSS + AdSights web feed builder | RSS 2.0 with `atom:link` self, `content:encoded` CDATA; Atom 1.0 |
@@ -52,7 +52,6 @@ APIs may change.
 | `security-txt` | experimental | Inkwell shared security.txt | RFC 9116; `Expires` required and must be in the future; warns past one year |
 | `audit` | experimental | new | Regex HTML snapshot plus per-page and site-wide lint: titles, descriptions, canonical, robots, lang, h1, alt, hreflang, JSON-LD parse, duplicates |
 | `impact` | experimental | AdSights web SEO impact | CTR two-proportion z-test and daily Welch t-test with verdicts. Wraps `@bib/shared/stats` and does not reimplement it |
-| `xml` | experimental | new | `escapeXml`, `cdata`, `stripInvalidXmlChars` |
 
 ## Usage
 
@@ -324,14 +323,8 @@ The verdict is `insufficient-data` when either side is too small:
 The day of the change itself is excluded from both windows. Pass
 `direction: "lower-is-better"` for metrics like average position.
 
-### `xml`
-
-```ts
-import { cdata, escapeXml } from "@bib/seo/xml"
-
-escapeXml("Q&A <b> \u0007") // "Q&amp;A &lt;b&gt; " (control char stripped)
-cdata("a ]]> b")            // "<![CDATA[a ]]]]><![CDATA[> b]]>"
-```
+XML escaping (`escapeXml`, `cdata`, `stripInvalidXmlChars`) lives in
+[`@bib/shared/xml`](../shared/README.md); the sitemap and feed builders use it.
 
 ## Runnable example
 

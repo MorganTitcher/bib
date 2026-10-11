@@ -13,8 +13,8 @@
  * (the date moves only when the hash changes).
  */
 
+import { escapeXml } from "@bib/shared/xml"
 import { type DateInput, isAbsoluteHttpUrl, normalizeDate } from "./internal.ts"
-import { escapeXml } from "./xml.ts"
 
 export const SITEMAP_MAX_URLS = 50_000
 export const SITEMAP_MAX_BYTES = 52_428_800

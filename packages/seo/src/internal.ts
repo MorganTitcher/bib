@@ -1,4 +1,5 @@
 /** Internal helpers shared across modules. Not exported from the package. */
+import { parseIsoDate } from "@bib/shared/dates"
 
 /** Drop keys whose value is `undefined` (and empty arrays when `dropEmptyArrays`). */
 export function compact<T extends Record<string, unknown>>(
@@ -18,13 +19,6 @@ export type DateInput = string | Date
 
 const BARE_DAY = /^\d{4}-\d{2}-\d{2}$/
 
-/** True for a real calendar day written `YYYY-MM-DD` (rejects `2026-02-31`). */
-export function isCalendarDay(text: string): boolean {
-  if (!BARE_DAY.test(text)) return false
-  const date = new Date(`${text}T00:00:00.000Z`)
-  return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === text
-}
-
 /**
  * Normalize a date input. A bare `YYYY-MM-DD` stays a bare day (it is a valid
  * W3C datetime and schema.org Date); anything else becomes a full ISO instant.
@@ -35,9 +29,9 @@ export function normalizeDate(input: DateInput): string | undefined {
     return Number.isNaN(input.getTime()) ? undefined : input.toISOString()
   }
   const text = input.trim()
-  if (BARE_DAY.test(text)) return isCalendarDay(text) ? text : undefined
+  if (BARE_DAY.test(text)) return parseIsoDate(text) ? text : undefined
   const prefix = text.slice(0, 10)
-  if (BARE_DAY.test(prefix) && !isCalendarDay(prefix)) return undefined
+  if (BARE_DAY.test(prefix) && !parseIsoDate(prefix)) return undefined
   const date = new Date(text)
   return Number.isNaN(date.getTime()) ? undefined : date.toISOString()
 }

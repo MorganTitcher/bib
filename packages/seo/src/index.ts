@@ -135,4 +135,3 @@ export {
   SITEMAP_MAX_URL_LENGTH,
   SITEMAP_MAX_URLS,
 } from "./sitemap.ts"
-export { cdata, escapeXml, stripInvalidXmlChars } from "./xml.ts"
