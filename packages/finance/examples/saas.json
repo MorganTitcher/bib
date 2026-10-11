@@ -1,11 +1,114 @@
 {
-  "arpa": 49,
-  "grossMargin": 0.8,
-  "monthlyChurn": 0.03,
-  "monthlyExpansion": 0.01,
-  "acquisitionSpend": 12000,
-  "newCustomers": 60,
-  "fixedCostsMonthly": 30000,
-  "cash": 250000,
-  "customers": 600
+  "meta": {
+    "name": "Example SaaS",
+    "currency": "USD",
+    "startMonth": "2027-01",
+    "horizonMonths": 24,
+    "lifetimeCapMonths": 60,
+    "discountRateAnnual": 0.1,
+    "defaultProvenance": { "source": "founder estimate", "evidence": "hypothesis" }
+  },
+  "opening": { "cash": 1500000 },
+  "streams": [
+    {
+      "type": "subscription",
+      "id": "core",
+      "tiers": [
+        { "id": "starter", "price": 49, "mix": 0.7 },
+        { "id": "pro", "price": { "low": 129, "point": 149, "high": 169 }, "mix": 0.3 }
+      ],
+      "annualPrepaidShare": 0.2,
+      "expansion": 0.02,
+      "contraction": 0.005,
+      "retention": {
+        "kind": "piecewise",
+        "segments": [
+          { "fromAge": 1, "monthlyChurn": { "low": 0.05, "point": 0.07, "high": 0.1 } },
+          { "fromAge": 4, "monthlyChurn": { "low": 0.02, "point": 0.03, "high": 0.045 } }
+        ]
+      },
+      "opening": { "customers": 120, "arpa": 80, "ageMonths": 10 },
+      "priceChanges": [{ "month": "2028-01", "pct": 0.1, "appliesTo": "new" }]
+    }
+  ],
+  "revenueDeductions": { "discountBps": 300, "refundBps": 100, "paymentFeeBps": 290 },
+  "channels": [
+    {
+      "type": "paid",
+      "id": "search",
+      "spend": { "low": 12000, "point": 15000, "high": 18000 },
+      "spendGrowth": 0.03,
+      "rampMonths": 2,
+      "unitCost": {
+        "kind": "cac",
+        "cac": {
+          "low": 250,
+          "point": 320,
+          "high": 450,
+          "provenance": { "source": "search pilot, Q4", "evidence": "observed", "asOf": "2026-12" }
+        }
+      },
+      "response": { "kind": "isoelastic", "referenceSpend": 15000, "elasticity": 0.85 },
+      "carryover": 0.2
+    },
+    { "type": "organic", "id": "organic", "customers": 8, "growth": 0.04 },
+    { "type": "referral", "id": "referral", "rate": 0.004 }
+  ],
+  "costs": {
+    "cogs": { "perActiveCustomer": 4, "revenueShare": 0.05 },
+    "headcount": [
+      {
+        "id": "eng",
+        "department": "rd",
+        "salary": 150000,
+        "count": 4,
+        "benefitsLoad": 0.22,
+        "hires": [{ "month": "2027-06", "count": 2 }]
+      },
+      {
+        "id": "support",
+        "department": "cogs",
+        "salary": 60000,
+        "count": 1,
+        "benefitsLoad": 0.2,
+        "trigger": { "metric": "activeCustomers", "per": 400, "maxCount": 6 }
+      },
+      { "id": "ops", "department": "ga", "salary": 110000, "count": 1, "benefitsLoad": 0.2 }
+    ],
+    "opex": [
+      { "id": "tools", "department": "rd", "rule": "perHead", "perHead": 300 },
+      { "id": "office", "department": "ga", "rule": "fixed", "amount": 6000 }
+    ],
+    "capex": [{ "id": "laptops", "month": 0, "amount": 18000, "usefulLifeMonths": 36 }]
+  },
+  "workingCapital": { "dsoDays": 15, "dpoDays": 30, "badDebtBps": 50 },
+  "taxes": { "rate": 0.21 },
+  "funding": [{ "type": "equity", "id": "seed-extension", "month": "2027-09", "amount": 750000 }],
+  "seasonality": { "acquisition": [0.9, 1, 1.1, 1, 1, 0.95, 0.85, 0.85, 1.1, 1.15, 1.05, 0.9] },
+  "actuals": [
+    { "month": "2027-01", "metric": "newCustomers", "value": 47 },
+    { "month": "2027-02", "metric": "newCustomers", "value": 60 },
+    { "month": "2027-03", "metric": "newCustomers", "value": 71 },
+    { "month": "2027-01", "metric": "mrr", "value": 11800 },
+    { "month": "2027-02", "metric": "mrr", "value": 14500 },
+    { "month": "2027-03", "metric": "mrr", "value": 18200 }
+  ],
+  "scenarios": [
+    {
+      "id": "downside",
+      "name": "Expensive search, high churn",
+      "overrides": {
+        "channels.search.unitCost.cac": "high",
+        "streams.core.retention.segments.1.monthlyChurn": "high"
+      }
+    },
+    {
+      "id": "upside",
+      "name": "Cheap search, sticky customers",
+      "overrides": {
+        "channels.search.unitCost.cac": "low",
+        "streams.core.retention.segments.1.monthlyChurn": "low"
+      }
+    }
+  ]
 }

@@ -1,0 +1,64 @@
+{
+  "meta": { "name": "Example services firm", "currency": "GBP", "horizonMonths": 18 },
+  "opening": { "cash": 250000, "receivables": 40000 },
+  "streams": [
+    {
+      "type": "subscription",
+      "id": "retainers",
+      "tiers": [
+        { "id": "retainer", "price": { "low": 2500, "point": 3000, "high": 3500 }, "mix": 1 }
+      ],
+      "retention": {
+        "kind": "constant",
+        "monthlyChurn": { "low": 0.03, "point": 0.05, "high": 0.08 }
+      },
+      "opening": { "customers": 12, "arpa": 2800 }
+    },
+    {
+      "type": "services",
+      "id": "projects",
+      "hours": 600,
+      "hoursGrowth": 0.02,
+      "hoursPerNewCustomer": 40,
+      "newCustomersOf": "retainers",
+      "rate": { "low": 110, "point": 130, "high": 150 },
+      "deliveryCostShare": { "low": 0.3, "point": 0.4, "high": 0.5 }
+    },
+    { "type": "oneTime", "id": "setup", "perNewCustomerOf": "retainers", "amount": 1500 }
+  ],
+  "channels": [
+    {
+      "type": "organic",
+      "id": "referrals-and-inbound",
+      "customers": { "low": 1, "point": 1.5, "high": 2 }
+    },
+    {
+      "type": "paid",
+      "id": "events",
+      "spend": 4000,
+      "unitCost": { "kind": "cac", "cac": 8000 },
+      "salesCycleMonths": 2
+    }
+  ],
+  "costs": {
+    "headcount": [
+      {
+        "id": "consultants",
+        "department": "cogs",
+        "salary": 65000,
+        "count": 4,
+        "benefitsLoad": 0.15
+      },
+      { "id": "partners", "department": "ga", "salary": 90000, "count": 2, "benefitsLoad": 0.15 }
+    ],
+    "opex": [{ "id": "rent", "department": "ga", "rule": "fixed", "amount": 5000 }]
+  },
+  "workingCapital": { "dsoDays": 45, "dpoDays": 30, "badDebtBps": 150 },
+  "taxes": { "rate": 0.25 },
+  "actuals": [
+    { "month": 0, "metric": "netRevenue", "value": 120000 },
+    { "month": 1, "metric": "netRevenue", "value": 118000 },
+    { "month": 2, "metric": "netRevenue", "value": 131000 },
+    { "month": 0, "metric": "cash", "value": 255000 }
+  ]
+}
