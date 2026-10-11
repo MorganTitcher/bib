@@ -1,0 +1,55 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+  "$description": "Example brand. Replace values, keep names: downstream packages consume these paths.",
+  "color": {
+    "$type": "color",
+    "brand": {
+      "primary": {
+        "$value": { "colorSpace": "oklch", "components": [0.62, 0.19, 259] },
+        "$description": "Primary actions, links, logo mark."
+      },
+      "accent": {
+        "$value": { "colorSpace": "oklch", "components": [0.78, 0.16, 70] },
+        "$description": "Highlights and data emphasis."
+      }
+    },
+    "neutral": {
+      "0": { "$value": { "colorSpace": "oklch", "components": [0.99, 0.003, 260] } },
+      "100": { "$value": { "colorSpace": "oklch", "components": [0.94, 0.006, 260] } },
+      "500": { "$value": { "colorSpace": "oklch", "components": [0.55, 0.014, 260] } },
+      "900": { "$value": { "colorSpace": "oklch", "components": [0.2, 0.016, 260] } }
+    },
+    "surface": {
+      "background": { "$value": "{color.neutral.0}" },
+      "foreground": { "$value": "{color.neutral.900}" },
+      "muted": { "$value": "{color.neutral.500}" }
+    }
+  },
+  "font": {
+    "family": {
+      "$type": "fontFamily",
+      "display": { "$value": ["Inter", "system-ui", "sans-serif"] },
+      "body": { "$value": ["Inter", "system-ui", "sans-serif"] },
+      "mono": { "$value": ["JetBrains Mono", "ui-monospace", "monospace"] }
+    },
+    "weight": {
+      "$type": "fontWeight",
+      "regular": { "$value": 400 },
+      "bold": { "$value": 700 }
+    }
+  },
+  "size": {
+    "$type": "dimension",
+    "radius": {
+      "sm": { "$value": { "value": 4, "unit": "px" } },
+      "md": { "$value": { "value": 8, "unit": "px" } },
+      "lg": { "$value": { "value": 16, "unit": "px" } }
+    },
+    "space": {
+      "1": { "$value": { "value": 4, "unit": "px" } },
+      "2": { "$value": { "value": 8, "unit": "px" } },
+      "4": { "$value": { "value": 16, "unit": "px" } },
+      "8": { "$value": { "value": 32, "unit": "px" } }
+    }
+  }
+}

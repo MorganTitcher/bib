@@ -1,0 +1,19 @@
+{
+  "name": "bib",
+  "owner": { "name": "Morgan Titcher" },
+  "metadata": {
+    "description": "Business-in-a-box: templated tooling for brand, marketing and finance work."
+  },
+  "plugins": [
+    {
+      "name": "brand",
+      "source": "./plugins/brand",
+      "description": "Brand design tokens (DTCG) built into CSS variables and typed JS."
+    },
+    {
+      "name": "finance",
+      "source": "./plugins/finance",
+      "description": "Unit economics, marketing math and sensitivity analysis from one assumptions file."
+    }
+  ]
+}

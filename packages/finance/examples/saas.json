@@ -1,0 +1,11 @@
+{
+  "arpa": 49,
+  "grossMargin": 0.8,
+  "monthlyChurn": 0.03,
+  "monthlyExpansion": 0.01,
+  "acquisitionSpend": 12000,
+  "newCustomers": 60,
+  "fixedCostsMonthly": 30000,
+  "cash": 250000,
+  "customers": 600
+}

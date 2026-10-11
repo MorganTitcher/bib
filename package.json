@@ -1,0 +1,23 @@
+{
+  "name": "bib",
+  "private": true,
+  "description": "Business in a box: plug-and-play tooling for brand, marketing, and finance.",
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "check": "biome check .",
+    "format": "biome check --write .",
+    "validate": "node scripts/validate-plugins.mts",
+    "verify": "pnpm check && pnpm validate && pnpm typecheck && pnpm build && pnpm test"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.15",
+    "turbo": "2.11.7",
+    "typescript": "catalog:"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "finance",
+  "version": "0.1.0",
+  "description": "Unit economics, marketing math and sensitivity analysis from one assumptions file.",
+  "author": { "name": "Morgan Titcher" }
+}
