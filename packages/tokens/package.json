@@ -1,0 +1,32 @@
+{
+  "name": "@bib/tokens",
+  "version": "0.1.0",
+  "description": "Brand design tokens in DTCG format, built to CSS variables and a typed JS module with Terrazzo.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "private": true,
+  "exports": {
+    ".": {
+      "types": "./build/tokens.d.ts",
+      "default": "./build/tokens.js"
+    },
+    "./css": "./build/tokens.css",
+    "./source": "./tokens/brand.tokens.json"
+  },
+  "files": [
+    "build",
+    "tokens"
+  ],
+  "scripts": {
+    "build": "terrazzo build",
+    "test": "terrazzo check"
+  },
+  "devDependencies": {
+    "@terrazzo/cli": "2.7.1",
+    "@terrazzo/plugin-css": "2.7.1",
+    "@terrazzo/plugin-js": "2.7.1"
+  },
+  "dependencies": {
+    "@terrazzo/token-types": "2.7.1"
+  }
+}

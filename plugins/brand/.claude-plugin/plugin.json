@@ -1,0 +1,6 @@
+{
+  "name": "brand",
+  "version": "0.1.0",
+  "description": "Brand design tokens (DTCG) built into CSS variables and typed JS.",
+  "author": { "name": "Morgan Titcher" }
+}
