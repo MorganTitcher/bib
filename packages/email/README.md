@@ -61,9 +61,9 @@ The whole package is `experimental` (`"bib": { "maturity": "experimental" }`).
 | `providers/resend` | experimental | new | `POST /emails`; `Idempotency-Key` header |
 | `providers/postmark` | experimental | new | `POST /email`; no native idempotency |
 | `providers/sendgrid` | experimental | new | `POST /v3/mail/send`; id from `X-Message-Id`; no native idempotency |
-| `providers/ses` | experimental, live-unverified | new | SES v2 `SendEmail` (simple content, attachments). SigV4 matches the AWS reference vectors but hasn't been run against a live account |
+| `providers/ses` | experimental | new | Live-unverified. SES v2 `SendEmail` (simple content, attachments). SigV4 matches the AWS reference vectors but hasn't been run against a live account |
 | `providers/sigv4` | experimental | new | AWS Signature Version 4 via `node:crypto`. Root barrel only (no subpath) |
-| `providers/smtp` | **scaffold** | new | Returns a `configuration` error. Needs the `nodemailer` dependency |
+| `providers/smtp` | scaffold | new | Returns a `configuration` error. Needs the `nodemailer` dependency |
 
 Every HTTP adapter passes `runProviderContract` with a mocked fetch.
 
