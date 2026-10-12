@@ -1,0 +1,74 @@
+{
+  "name": "@bib/seo",
+  "version": "0.1.0",
+  "description": "Typed builders for JSON-LD, sitemaps, robots.txt (incl. AI crawlers), llms.txt, RSS, security.txt and IndexNow.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "private": true,
+  "bib": {
+    "maturity": "experimental"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./jsonld": {
+      "types": "./dist/jsonld.d.ts",
+      "default": "./dist/jsonld.js"
+    },
+    "./metadata": {
+      "types": "./dist/metadata.d.ts",
+      "default": "./dist/metadata.js"
+    },
+    "./sitemap": {
+      "types": "./dist/sitemap.d.ts",
+      "default": "./dist/sitemap.js"
+    },
+    "./robots": {
+      "types": "./dist/robots.d.ts",
+      "default": "./dist/robots.js"
+    },
+    "./llms-txt": {
+      "types": "./dist/llms-txt.d.ts",
+      "default": "./dist/llms-txt.js"
+    },
+    "./feeds": {
+      "types": "./dist/feeds.d.ts",
+      "default": "./dist/feeds.js"
+    },
+    "./indexnow": {
+      "types": "./dist/indexnow.d.ts",
+      "default": "./dist/indexnow.js"
+    },
+    "./security-txt": {
+      "types": "./dist/security-txt.d.ts",
+      "default": "./dist/security-txt.js"
+    },
+    "./audit": {
+      "types": "./dist/audit.d.ts",
+      "default": "./dist/audit.js"
+    },
+    "./impact": {
+      "types": "./dist/impact.d.ts",
+      "default": "./dist/impact.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@bib/shared": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

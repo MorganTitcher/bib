@@ -1,0 +1,114 @@
+{
+  "name": "@bib/email",
+  "version": "0.1.0",
+  "description": "A provider-agnostic email port with retry, fallback, idempotency and a reusable adapter contract test.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "private": true,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./address": {
+      "types": "./dist/address.d.ts",
+      "default": "./dist/address.js"
+    },
+    "./message": {
+      "types": "./dist/message.d.ts",
+      "default": "./dist/message.js"
+    },
+    "./errors": {
+      "types": "./dist/errors.d.ts",
+      "default": "./dist/errors.js"
+    },
+    "./provider": {
+      "types": "./dist/provider.d.ts",
+      "default": "./dist/provider.js"
+    },
+    "./http": {
+      "types": "./dist/http.d.ts",
+      "default": "./dist/http.js"
+    },
+    "./retry": {
+      "types": "./dist/retry.d.ts",
+      "default": "./dist/retry.js"
+    },
+    "./fallback": {
+      "types": "./dist/fallback.d.ts",
+      "default": "./dist/fallback.js"
+    },
+    "./idempotency": {
+      "types": "./dist/idempotency.d.ts",
+      "default": "./dist/idempotency.js"
+    },
+    "./redact": {
+      "types": "./dist/redact.d.ts",
+      "default": "./dist/redact.js"
+    },
+    "./health": {
+      "types": "./dist/health.d.ts",
+      "default": "./dist/health.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "default": "./dist/client.js"
+    },
+    "./testing": {
+      "types": "./dist/testing.d.ts",
+      "default": "./dist/testing.js"
+    },
+    "./providers/resend": {
+      "types": "./dist/providers/resend.d.ts",
+      "default": "./dist/providers/resend.js"
+    },
+    "./providers/postmark": {
+      "types": "./dist/providers/postmark.d.ts",
+      "default": "./dist/providers/postmark.js"
+    },
+    "./providers/sendgrid": {
+      "types": "./dist/providers/sendgrid.d.ts",
+      "default": "./dist/providers/sendgrid.js"
+    },
+    "./providers/ses": {
+      "types": "./dist/providers/ses.d.ts",
+      "default": "./dist/providers/ses.js"
+    },
+    "./providers/sigv4": {
+      "types": "./dist/providers/sigv4.d.ts",
+      "default": "./dist/providers/sigv4.js"
+    },
+    "./providers/console": {
+      "types": "./dist/providers/console.d.ts",
+      "default": "./dist/providers/console.js"
+    },
+    "./providers/memory": {
+      "types": "./dist/providers/memory.d.ts",
+      "default": "./dist/providers/memory.js"
+    },
+    "./providers/smtp": {
+      "types": "./dist/providers/smtp.d.ts",
+      "default": "./dist/providers/smtp.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@bib/shared": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "bib": {
+    "maturity": "experimental"
+  }
+}

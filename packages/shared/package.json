@@ -1,0 +1,106 @@
+{
+  "name": "@bib/shared",
+  "version": "0.1.0",
+  "description": "Dependency-free building blocks every bib package uses: Result, retry, async, money, formatting, CSV, ids, hashing, pagination, stats.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "private": true,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./result": {
+      "types": "./dist/result.d.ts",
+      "default": "./dist/result.js"
+    },
+    "./guards": {
+      "types": "./dist/guards.d.ts",
+      "default": "./dist/guards.js"
+    },
+    "./errors": {
+      "types": "./dist/errors.d.ts",
+      "default": "./dist/errors.js"
+    },
+    "./async": {
+      "types": "./dist/async.d.ts",
+      "default": "./dist/async.js"
+    },
+    "./retry": {
+      "types": "./dist/retry.d.ts",
+      "default": "./dist/retry.js"
+    },
+    "./money": {
+      "types": "./dist/money.d.ts",
+      "default": "./dist/money.js"
+    },
+    "./format": {
+      "types": "./dist/format.d.ts",
+      "default": "./dist/format.js"
+    },
+    "./strings": {
+      "types": "./dist/strings.d.ts",
+      "default": "./dist/strings.js"
+    },
+    "./csv": {
+      "types": "./dist/csv.d.ts",
+      "default": "./dist/csv.js"
+    },
+    "./ids": {
+      "types": "./dist/ids.d.ts",
+      "default": "./dist/ids.js"
+    },
+    "./hashing": {
+      "types": "./dist/hashing.d.ts",
+      "default": "./dist/hashing.js"
+    },
+    "./pagination": {
+      "types": "./dist/pagination.d.ts",
+      "default": "./dist/pagination.js"
+    },
+    "./random": {
+      "types": "./dist/random.d.ts",
+      "default": "./dist/random.js"
+    },
+    "./stats": {
+      "types": "./dist/stats.d.ts",
+      "default": "./dist/stats.js"
+    },
+    "./dates": {
+      "types": "./dist/dates.d.ts",
+      "default": "./dist/dates.js"
+    },
+    "./env": {
+      "types": "./dist/env.d.ts",
+      "default": "./dist/env.js"
+    },
+    "./events": {
+      "types": "./dist/events.d.ts",
+      "default": "./dist/events.js"
+    },
+    "./encoding": {
+      "types": "./dist/encoding.d.ts",
+      "default": "./dist/encoding.js"
+    },
+    "./xml": {
+      "types": "./dist/xml.d.ts",
+      "default": "./dist/xml.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  },
+  "bib": {
+    "maturity": "experimental"
+  }
+}

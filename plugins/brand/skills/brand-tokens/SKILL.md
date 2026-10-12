@@ -27,4 +27,10 @@ pnpm --filter @bib/tokens build  # writes build/tokens.css, build/tokens.js, bui
 - JS/TS: `import { resolver } from "@bib/tokens";` then `resolver.apply({})["color.brand.primary"]` for typed, normalized values.
 - Raw source: `@bib/tokens/source` for tools that read DTCG directly.
 
-After changing a token, rebuild and check contrast for any text-on-surface pair you touched (WCAG AA: 4.5:1 for body text).
+The example brand ships 21 tokens in one mode. There are no dark-mode or per-brand themes yet, so do not invent a theme structure. Say it is missing.
+
+After changing a token, rebuild and check contrast for any text-on-surface pair you touched (WCAG AA: 4.5:1 for body text, 3:1 for large text). Use the package rather than eyeballing it. `contrastRatio` accepts oklch strings:
+
+```sh
+cd packages/svg && node --input-type=module -e 'import { contrastRatio } from "@bib/svg/color"; console.log(contrastRatio("oklch(20% 0.016 260)", "oklch(99% 0.003 260)").toFixed(2))'
+```

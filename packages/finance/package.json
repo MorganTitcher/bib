@@ -1,7 +1,7 @@
 {
   "name": "@bib/finance",
   "version": "0.1.0",
-  "description": "Unit economics and marketing-efficiency calculators. Every result carries the assumptions that produced it.",
+  "description": "A month-by-month finance model for early-stage businesses: revenue streams, cohorts, channels, costs, funding and cash, with unit economics, sensitivity, Monte Carlo, scenarios and variance against actuals. Every input is a band with provenance.",
   "type": "module",
   "license": "UNLICENSED",
   "private": true,
@@ -9,6 +9,70 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./band": {
+      "types": "./dist/band.d.ts",
+      "default": "./dist/band.js"
+    },
+    "./months": {
+      "types": "./dist/months.d.ts",
+      "default": "./dist/months.js"
+    },
+    "./retention": {
+      "types": "./dist/retention.d.ts",
+      "default": "./dist/retention.js"
+    },
+    "./schema": {
+      "types": "./dist/schema.d.ts",
+      "default": "./dist/schema.js"
+    },
+    "./paths": {
+      "types": "./dist/paths.d.ts",
+      "default": "./dist/paths.js"
+    },
+    "./acquisition": {
+      "types": "./dist/acquisition.d.ts",
+      "default": "./dist/acquisition.js"
+    },
+    "./engine": {
+      "types": "./dist/engine.d.ts",
+      "default": "./dist/engine.js"
+    },
+    "./metrics": {
+      "types": "./dist/metrics.d.ts",
+      "default": "./dist/metrics.js"
+    },
+    "./unit-economics": {
+      "types": "./dist/unit-economics.d.ts",
+      "default": "./dist/unit-economics.js"
+    },
+    "./sensitivity": {
+      "types": "./dist/sensitivity.d.ts",
+      "default": "./dist/sensitivity.js"
+    },
+    "./monte-carlo": {
+      "types": "./dist/monte-carlo.d.ts",
+      "default": "./dist/monte-carlo.js"
+    },
+    "./scenarios": {
+      "types": "./dist/scenarios.d.ts",
+      "default": "./dist/scenarios.js"
+    },
+    "./variance": {
+      "types": "./dist/variance.d.ts",
+      "default": "./dist/variance.js"
+    },
+    "./solve": {
+      "types": "./dist/solve.d.ts",
+      "default": "./dist/solve.js"
+    },
+    "./report": {
+      "types": "./dist/report.d.ts",
+      "default": "./dist/report.js"
+    },
+    "./cli": {
+      "types": "./dist/cli.d.ts",
+      "default": "./dist/cli.js"
     }
   },
   "bin": {
@@ -17,12 +81,16 @@
   "files": [
     "dist"
   ],
+  "bib": {
+    "maturity": "experimental"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run"
   },
   "dependencies": {
+    "@bib/shared": "workspace:*",
     "zod": "catalog:"
   },
   "devDependencies": {

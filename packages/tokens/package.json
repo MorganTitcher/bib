@@ -5,6 +5,9 @@
   "type": "module",
   "license": "UNLICENSED",
   "private": true,
+  "bib": {
+    "maturity": "experimental"
+  },
   "exports": {
     ".": {
       "types": "./build/tokens.d.ts",

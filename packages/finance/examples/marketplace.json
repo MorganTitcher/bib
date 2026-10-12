@@ -1,0 +1,108 @@
+{
+  "meta": {
+    "name": "Example marketplace",
+    "currency": "EUR",
+    "startMonth": "2027-01",
+    "horizonMonths": 36
+  },
+  "opening": { "cash": 2000000 },
+  "streams": [
+    {
+      "type": "subscription",
+      "id": "sellers",
+      "name": "Seller plans",
+      "tiers": [{ "id": "seller", "price": 29, "mix": 1 }],
+      "retention": {
+        "kind": "curve",
+        "survival": [0.85, 0.78, 0.74, 0.71, 0.69, 0.67],
+        "tailChurn": { "low": 0.02, "point": 0.025, "high": 0.035 }
+      }
+    },
+    {
+      "type": "marketplace",
+      "id": "gmv",
+      "customersOf": "sellers",
+      "gmvPerActiveCustomer": { "low": 900, "point": 1200, "high": 1500 },
+      "takeRateBps": { "low": 800, "point": 1000, "high": 1200 },
+      "paymentFeeBps": 140,
+      "paymentFeeOn": "gmv"
+    }
+  ],
+  "channels": [
+    {
+      "type": "paid",
+      "id": "social",
+      "spend": 20000,
+      "spendGrowth": 0.02,
+      "unitCost": {
+        "kind": "funnel",
+        "cpm": 9,
+        "ctr": 0.011,
+        "cvr": { "low": 0.02, "point": 0.03, "high": 0.04 }
+      },
+      "response": { "kind": "diminishing", "halfSaturationSpend": 60000 },
+      "demandCap": 400
+    },
+    {
+      "type": "sales",
+      "id": "field-sales",
+      "role": "ae",
+      "customersPerRep": { "low": 6, "point": 10, "high": 14 },
+      "rampMonths": 3,
+      "salesCycleMonths": 1
+    }
+  ],
+  "costs": {
+    "cogs": { "perActiveCustomer": 3 },
+    "headcount": [
+      {
+        "id": "eng",
+        "department": "rd",
+        "salary": 95000,
+        "count": 6,
+        "benefitsLoad": 0.3,
+        "annualRaise": 0.04
+      },
+      {
+        "id": "ae",
+        "department": "sm",
+        "salary": 70000,
+        "count": 2,
+        "benefitsLoad": 0.3,
+        "commissionRate": 0.1,
+        "hires": [{ "month": 6, "count": 2 }, { "month": 12, "count": 2 }]
+      },
+      {
+        "id": "trust",
+        "department": "cogs",
+        "salary": 50000,
+        "count": 1,
+        "benefitsLoad": 0.3,
+        "trigger": { "metric": "activeCustomers", "per": 500 }
+      }
+    ],
+    "opex": [
+      { "id": "brand", "department": "sm", "rule": "revenueShare", "share": 0.03 },
+      { "id": "admin", "department": "ga", "rule": "growth", "amount": 15000, "growth": 0.01 }
+    ]
+  },
+  "workingCapital": { "dsoDays": 5, "dpoDays": 20 },
+  "taxes": { "rate": 0.25 },
+  "funding": [
+    {
+      "type": "debt",
+      "id": "venture-debt",
+      "month": 9,
+      "principal": 500000,
+      "annualRate": 0.11,
+      "termMonths": 36,
+      "interestOnlyMonths": 6
+    },
+    { "type": "grant", "id": "innovation-grant", "month": 3, "amount": 100000 }
+  ],
+  "seasonality": { "volume": [0.85, 0.9, 1, 1, 1, 0.95, 0.9, 0.9, 1.05, 1.1, 1.2, 1.25] },
+  "events": [
+    { "id": "launch-event", "month": 4, "kind": "expense", "amount": 40000, "department": "sm" }
+  ],
+  "scenarios": [{ "id": "low-take", "overrides": { "streams.gmv.takeRateBps": "low" } }]
+}
