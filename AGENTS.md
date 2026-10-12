@@ -75,4 +75,5 @@ characters, and `SKILL.md` stays under 500 lines. A new plugin must be listed in
 ## Wording
 
 Ported code comes from several source repos. Keep the domain generic in bib code and docs. Do not
-copy code from paid products (the adsights-web `frameworks/`). Learn from the ideas only.
+copy code from paid products (the paid email and ads frameworks in some source repos). Learn from
+the ideas only.

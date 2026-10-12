@@ -27,12 +27,12 @@ pnpm verify   # biome, plugin + maturity validation, typecheck, build, tests (wh
 
 | Package | Maturity | Purpose | Tests |
 | --- | --- | --- | --- |
-| [`@bib/shared`](./packages/shared) | experimental | Dependency-free building blocks: Result, retry, async, money, formatting, CSV, ids, hashing, pagination, stats, dates, env, events | 265 |
+| [`@bib/shared`](./packages/shared) | experimental | Dependency-free building blocks: Result, retry, async, money, formatting, CSV, ids, hashing, pagination, stats, dates, env, events | 274 |
 | [`@bib/consent`](./packages/consent) | experimental | Privacy-region detection, Google Consent Mode v2 state, first-party attribution (UTMs, click IDs) | 166 |
 | [`@bib/sla`](./packages/sla) | experimental | Business-hours SLA clocks with holiday calendars, pauses and warning thresholds | 105 |
-| [`@bib/seo`](./packages/seo) | experimental | JSON-LD, sitemaps, robots.txt (incl. AI crawlers), llms.txt, RSS, security.txt, IndexNow | 90 |
-| [`@bib/svg`](./packages/svg) | experimental | SVG escaping, builder, DSL, sanitizer, colour/contrast, badges, OG cards, BIMI checks | 201 |
-| [`@bib/email`](./packages/email) | experimental | Provider-agnostic email port with retry, fallback, idempotency and an adapter contract test | 229 |
+| [`@bib/seo`](./packages/seo) | experimental | JSON-LD, sitemaps, robots.txt (incl. AI crawlers), llms.txt, RSS, security.txt, IndexNow | 87 |
+| [`@bib/svg`](./packages/svg) | experimental | SVG escaping, builder, DSL, sanitizer, colour/contrast, badges, OG cards, BIMI checks | 195 |
+| [`@bib/email`](./packages/email) | experimental | Provider-agnostic email port with retry, fallback, idempotency and an adapter contract test | 228 |
 | [`@bib/finance`](./packages/finance) | experimental | Month-by-month finance model: unit economics, tornado, Monte Carlo, scenarios, variance, backsolve | 106 |
 | [`@bib/tokens`](./packages/tokens) | experimental | DTCG 2025.10 brand tokens built to CSS variables and typed JS with Terrazzo | `terrazzo check` |
 
@@ -55,8 +55,8 @@ values per module. `pnpm validate` enforces both.
 
 Build first (`pnpm build`). The snippets below were run against the built packages. To try one,
 run `node --input-type=module -e '…'` from that package's directory, where the self-referencing
-`@bib/<name>` import resolves. Each package also has an `examples/` directory except `shared` and
-`tokens`, which do not have one yet.
+`@bib/<name>` import resolves. Each package also has an `examples/` directory with a runnable
+script whose header lists its expected output.
 
 ### `@bib/shared`
 
@@ -211,10 +211,11 @@ Contributor conventions (maturity, examples, reuse of `@bib/shared`, adapter con
 - **Python: undecided.** Some source code worth porting (the acquisition/CAC engine and SEO data
   pulls) is Python. The open question is whether it lives here as uv packages (for example under
   `python/`) or gets ported to TypeScript on top of `@bib/finance` and `@bib/shared`.
-- **adsights-web paid frameworks are reference only.** The email and ads frameworks there are paid
-  products. bib may learn from their ideas but does not copy their code.
-- **Video: Remotion's license.** Remotion is free for individuals and small companies, but needs a
-  paid company license above a headcount threshold (currently teams of more than 3). Check the
-  current terms before adding a video package.
+- **Paid source frameworks are reference only.** Some source repos contain email and ads frameworks
+  that are paid products. bib may learn from their ideas but does not copy their code.
+- **Video: Remotion's license.** Remotion's license (checked 2026-10-12) is free for individuals,
+  non-profits and for-profit organizations with up to 3 employees; larger for-profit organizations
+  need a paid company license. The terms are announced to change in Remotion 5.0, so re-check them
+  before adding a video package.
 - **SMTP email needs nodemailer.** The SMTP adapter is a scaffold until `nodemailer` is added as a
   dependency and the adapter passes the contract test.
